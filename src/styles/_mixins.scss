@@ -1,0 +1,23 @@
+@use 'variables' as v;
+
+@mixin custom-scrollbar-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@mixin line-clamp($lines) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@mixin diagonal-ribbon($skew: -2deg) {
+  transform: skewY($skew);
+  > * {
+    transform: skewY(-$skew);
+  }
+}

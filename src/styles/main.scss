@@ -1,0 +1,398 @@
+@use 'variables' as v;
+@use 'mixins' as m;
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-white text-ink-900 antialiased;
+    font-feature-settings: 'ss01' on, 'cv11' on;
+  }
+
+  :focus-visible {
+    outline: 2px solid theme('colors.brand.blue');
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  .container-app {
+    @apply mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-8;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-200 ease-out disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .btn-primary {
+    @apply btn bg-brand-blue text-white shadow-card hover:bg-brand-blue-dark active:scale-[0.98];
+  }
+
+  .btn-outline {
+    @apply btn border border-surface-line bg-white text-ink-900 hover:border-brand-blue hover:text-brand-blue;
+  }
+
+  .btn-ghost-arrow {
+    @apply inline-flex items-center gap-2 text-sm font-semibold text-ink-900 hover:text-brand-blue transition-colors;
+  }
+
+  .section-badge {
+    @apply inline-flex items-center rounded-full bg-brand-blue-light px-4 py-1.5 text-xs font-semibold tracking-wide text-brand-blue;
+  }
+
+  .card-surface {
+    @apply rounded-xl2 border border-surface-line bg-white shadow-card;
+  }
+
+  .form-input {
+    @apply w-full rounded-xl border border-surface-line bg-surface-soft px-4 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 transition-colors focus:border-brand-blue focus:bg-white focus:outline-none;
+  }
+}
+
+.course-card {
+  --pillar: 41px;
+  --big-r: 45px;
+  --r: 27px;
+  --d: calc(var(--r) * 2);
+  --space: calc(var(--big-r) + var(--pillar));
+  position: relative;
+  width: 100%;
+  height: 260px;
+  isolation: isolate;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: 32px;
+    pointer-events: none;
+    transform: scaleY(-1);
+    background:
+      radial-gradient(circle at 100% 0%, transparent var(--big-r), var(--card-color) calc(var(--big-r) + 1px))
+        0 var(--pillar) / calc(100% - var(--pillar)) 100% no-repeat,
+      radial-gradient(circle closest-side, var(--card-color) 100%, transparent calc(100% + 1px))
+        calc(100% - var(--space)) 0 / var(--d) var(--d) no-repeat,
+      radial-gradient(circle closest-side, var(--card-color) 100%, transparent calc(100% + 1px))
+        100% var(--space) / var(--d) var(--d) no-repeat,
+      linear-gradient(var(--card-color), var(--card-color))
+        0 var(--r) / calc(100% - var(--space)) calc(100% - var(--r)) no-repeat,
+      linear-gradient(var(--card-color), var(--card-color))
+        0 0 / calc(100% - var(--r) - var(--space)) var(--d) no-repeat,
+      linear-gradient(var(--card-color), var(--card-color))
+        100% calc(var(--space) + var(--r)) / var(--d) calc(100% - var(--space) - var(--r)) no-repeat,
+      linear-gradient(var(--card-color), var(--card-color))
+        0 var(--space) / calc(100% - var(--r)) 100% no-repeat;
+  }
+
+  &--green  { --card-color: #{v.$tint-green}; }
+  &--purple { --card-color: #{v.$tint-purple}; }
+  &--yellow { --card-color: #{v.$tint-yellow}; }
+  &--peach  { --card-color: #{v.$tint-peach}; }
+  &--blue   { --card-color: #{v.$tint-blue}; }
+  &--pink   { --card-color: #{v.$tint-pink}; }
+}
+
+.course-card__content {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 262px;
+}
+
+.course-card__title {
+  margin: 0;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 120%;
+  color: v.$color-ink-900;
+}
+
+.course-card__desc {
+  margin: 0;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 142%;
+  color: v.$color-ink-500;
+}
+
+.course-card__badge {
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 16px;
+  height: 37px;
+  background: #fff;
+  border-radius: 23px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 142%;
+  color: v.$color-ink-900;
+  white-space: nowrap;
+}
+
+.course-card__action-wrap {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  padding: 5px;
+  background: #fff;
+  border-radius: 51px;
+}
+
+.course-card__action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 68px;
+  height: 67px;
+  background: #fff;
+  border: 1px solid v.$color-surface-line;
+  border-radius: 51px;
+  color: v.$color-ink-700;
+  transition: border-color 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    border-color: v.$color-brand-blue;
+    color: v.$color-brand-blue;
+    box-shadow: 0 4px 12px rgba(26, 26, 46, 0.08);
+  }
+}
+
+.quiz-banner-waves {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+
+  svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 30s linear infinite;
+}
+
+.marquee-row:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.accordion-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.28s ease;
+
+  &[data-open='true'] {
+    grid-template-rows: 1fr;
+  }
+
+  > div {
+    overflow: hidden;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal,
+  .reveal-child {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(60px);
+  transition: opacity 1.1s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+
+  &[data-revealed='true'] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal-child {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal[data-revealed='true'] .reveal-child {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.timeline {
+  position: relative;
+  text-align: center;
+}
+
+.timeline__line {
+  width: 2px;
+  margin: 0 auto;
+  border-radius: 1px;
+
+  &--down {
+    background: linear-gradient(to bottom, transparent 0%, v.$color-surface-line 100%);
+  }
+
+  &--up {
+    background: linear-gradient(to bottom, v.$color-surface-line 0%, transparent 100%);
+  }
+}
+
+.timeline__dot {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+
+  &::before {
+    content: '';
+    display: block;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #fff;
+    border: 3px solid v.$color-surface-line;
+  }
+}
+
+.review-bubble {
+  position: relative;
+  border-radius: 16px;
+  padding: 14px 18px;
+  font-size: 12px;
+  line-height: 1.5;
+  font-style: italic;
+  max-width: 240px;
+  color: v.$color-ink-900;
+
+  &--pink   { background: #f9d5e5; }
+  &--green  { background: #d4f5e4; }
+  &--yellow { background: #fef3c7; }
+  &--blue   { background: #d3e4ff; }
+  &--purple { background: #e8daf9; }
+}
+
+.reviews-funnel {
+  position: relative;
+  margin: 0 auto;
+  max-width: 760px;
+}
+
+.reviews-scatter {
+  position: relative;
+  min-height: 600px;
+  padding-bottom: 180px;
+
+  @media (min-width: 768px) {
+    min-height: 640px;
+    padding-bottom: 220px;
+  }
+
+  @media (max-width: 640px) {
+    min-height: auto;
+    padding-bottom: 160px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .review-item {
+      position: static !important;
+      transform: none !important;
+    }
+    .review-bubble {
+      max-width: 100%;
+    }
+  }
+}
+
+.reviews-funnel__box {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 520px;
+  max-width: 85%;
+  height: 220px;
+  overflow: hidden;
+  pointer-events: none;
+
+  img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  @media (max-width: 640px) {
+    width: 340px;
+    height: 170px;
+  }
+}
+
+.review-item {
+  position: absolute;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.review-avatar {
+  flex: none;
+  width: 44px;
+  text-align: center;
+
+  img {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  span {
+    display: block;
+    margin-top: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    color: v.$color-ink-700;
+  }
+}

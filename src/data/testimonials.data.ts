@@ -1,0 +1,68 @@
+import type { VideoTestimonial } from '../types/testimonial.types';
+
+export const testimonials: VideoTestimonial[] = [
+  {
+    id: 'v-1',
+    studentName: 'Elnur Abbasov',
+    courseLabel: 'Abituriyent Hazırlığı',
+    resultLabel: '680 bal',
+    thumbnailUrl: 'https://i.pravatar.cc/400?img=13',
+    videoUrl: 'https://www.youtube.com/embed/FdB5qhGRSgQ',
+  },
+  {
+    id: 'v-2',
+    studentName: 'Tural Məmmədov',
+    courseLabel: 'Olimpiada',
+    resultLabel: 'Respublika Qalibi',
+    thumbnailUrl: 'https://i.pravatar.cc/400?img=14',
+    videoUrl: 'https://www.youtube.com/embed/FfJ5XG5i2aw',
+  },
+  {
+    id: 'v-3',
+    studentName: 'Səbinə Quliyeva',
+    courseLabel: 'IELTS Hazırlığı',
+    resultLabel: 'IELTS 8.0',
+    thumbnailUrl: 'https://i.pravatar.cc/400?img=25',
+    videoUrl: 'https://www.youtube.com/embed/DC58z4N0IWw',
+  },
+  {
+    id: 'v-4',
+    studentName: 'Elvin Əliyev',
+    courseLabel: 'Abituriyent',
+    resultLabel: '670 bal',
+    thumbnailUrl: 'https://i.pravatar.cc/400?img=15',
+    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+  },
+  {
+    id: 'v-5',
+    studentName: 'Nərmin Bağırova',
+    courseLabel: 'Xarici Dillər',
+    resultLabel: 'IELTS 7.5',
+    thumbnailUrl: 'https://i.pravatar.cc/400?img=26',
+    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+  },
+  {
+    id: 'v-6',
+    studentName: 'Rəşad Cəfərov',
+    courseLabel: 'Olimpiada',
+    resultLabel: 'Beynəlxalq Bürünc',
+    thumbnailUrl: 'https://i.pravatar.cc/400?img=17',
+    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4',
+  },
+  {
+    id: 'v-7',
+    studentName: 'Xəyalə Musayeva',
+    courseLabel: 'Abituriyent Hazırlığı',
+    resultLabel: '705 bal',
+    thumbnailUrl: 'https://i.pravatar.cc/400?img=28',
+    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+  },
+  {
+    id: 'v-8',
+    studentName: 'Cavid Nəsirov',
+    courseLabel: 'Təkmilləşdirmə',
+    resultLabel: 'Əla qiymət',
+    thumbnailUrl: 'https://i.pravatar.cc/400?img=18',
+    videoUrl: 'https://www.youtube.com/embed/FdB5qhGRSgQ',
+  },
+];
