@@ -40,7 +40,7 @@ export function QuizBanner() {
 
           <div className="relative z-10 grid gap-8 p-8 sm:p-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
             <div>
-              <span className="section-badge bg-white">{t('quiz.bannerBadge')}</span>
+              <span className="section-badge bg-white">Demo test</span>
               <h2 className="mt-5 max-w-md text-3xl font-extrabold leading-tight tracking-tight text-ink-900 sm:text-4xl">
                 {t('quiz.bannerTitle')}
               </h2>

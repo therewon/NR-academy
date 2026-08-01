@@ -3,14 +3,11 @@ import { Container } from '../../common/Container';
 import { SectionBadge } from '../../common/SectionBadge';
 import { Button } from '../../common/Button';
 import { Icon } from '../../common/Icon';
-import { useAsyncData } from '../../../hooks/useAsyncData';
 import { useScrollReveal } from '../../../hooks/useScrollReveal';
-import { getCourses } from '../../../api/endpoints/courses.api';
 import { homeStats } from '../../../data/stats.data';
 import { ROUTES } from '../../../constants/routes';
 
 export function AboutSection() {
-  useAsyncData(getCourses, []);
   const { t } = useTranslation();
   const ref = useScrollReveal<HTMLElement>();
 

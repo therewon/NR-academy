@@ -8,6 +8,10 @@ export interface AuthResponse {
   refreshToken: string;
 }
 
+export interface RefreshTokenPayload {
+  refreshToken: string;
+}
+
 export interface RegisterPayload {
   firstName: string;
   lastName: string;
@@ -16,4 +20,15 @@ export interface RegisterPayload {
   password: string;
   confirmPassword: string;
   role: number;
+}
+
+export interface VerifyEmailPayload {
+  email: string;
+  code: string;
+}
+
+export type VerifyResetCodePayload = VerifyEmailPayload;
+
+export interface ResetPasswordPayload extends VerifyEmailPayload {
+  newPassword: string;
 }

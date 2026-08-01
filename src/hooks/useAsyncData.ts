@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+/* oxlint-disable react-hooks/exhaustive-deps, react-hooks/set-state-in-effect */
+import { useEffect, useReducer, useState } from 'react';
 
 interface UseAsyncDataState<T> {
   data: T | undefined;
@@ -7,6 +8,7 @@ interface UseAsyncDataState<T> {
 }
 
 export function useAsyncData<T>(fetcher: () => Promise<T>, deps: unknown[] = []) {
+  const [requestVersion, refetch] = useReducer((version: number) => version + 1, 0);
   const [state, setState] = useState<UseAsyncDataState<T>>({
     data: undefined,
     isLoading: true,
@@ -28,7 +30,7 @@ export function useAsyncData<T>(fetcher: () => Promise<T>, deps: unknown[] = [])
     return () => {
       isMounted = false;
     };
-  }, deps);
+  }, [...deps, requestVersion]);
 
-  return state;
+  return { ...state, refetch };
 }

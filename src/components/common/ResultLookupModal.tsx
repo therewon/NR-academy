@@ -1,7 +1,8 @@
 import { useTranslation } from 'react-i18next';
 import { useState, type FormEvent } from 'react';
 import { Icon } from './Icon';
-import { useQuiz, type StoredResult } from '../../context/QuizContext';
+import { useQuiz } from '../../hooks/useQuiz';
+import type { StoredResult } from '../../types/quiz.types';
 
 interface ResultLookupModalProps {
   onClose: () => void;

@@ -6,7 +6,7 @@ import { Container } from '../components/common/Container';
 import { Button } from '../components/common/Button';
 import { ResultLookupModal } from '../components/common/ResultLookupModal';
 import { cn } from '../utils/cn';
-import { useQuiz } from '../context/QuizContext';
+import { useQuiz } from '../hooks/useQuiz';
 import { quizSubjects } from '../data/quiz.mock';
 
 export function QuizIntroPage() {
@@ -27,8 +27,11 @@ export function QuizIntroPage() {
       <section ref={revealRef1} className="reveal py-14 sm:py-20">
         <Container className="max-w-4xl">
           <h1 className="text-3xl font-extrabold tracking-tight text-ink-900 sm:text-4xl">
-            {t('quiz.selectSubject').split('\n')[0]}{'\n'}fənn seçin
+            {t('quiz.selectSubject')}
           </h1>
+          <p className="mt-3 max-w-xl text-sm leading-relaxed text-ink-500">
+            Bu demo testdir. Nəticə yalnız cari brauzer sessiyasında saxlanılır və şəxsi kabinetə göndərilmir.
+          </p>
 
           <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
             {quizSubjects.map((subject) => (

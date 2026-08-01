@@ -12,13 +12,8 @@ import { getFaqItems } from '../api/endpoints/faq.api';
 import { COURSE_LEVEL_LABELS } from '../types/course.types';
 import { genericCurriculum } from '../data/curriculum.data';
 import { ROUTES } from '../constants/routes';
-
-const mockResults = [
-  { id: 'r-1', name: 'Günel Rzayeva', score: '8.0' },
-  { id: 'r-2', name: 'Aytac Əfəndi', score: '8.0' },
-  { id: 'r-3', name: 'Əli Əliyev', score: '8.0' },
-  { id: 'r-4', name: 'Bərnii Hüseynov', score: '8.0' },
-];
+import { FeedbackState } from '../components/common/FeedbackState';
+import { getCertificates } from '../api/endpoints/certificates.api';
 
 export function CourseDetailPage() {
   const revealRef1 = useScrollReveal<HTMLElement>();
@@ -27,10 +22,17 @@ export function CourseDetailPage() {
   const revealRef4 = useScrollReveal<HTMLElement>();
   const { id } = useParams<{ id: string }>();
   const courseId = Number(id);
-  const { data: course, isLoading } = useAsyncData(() => getCourseById(courseId), [courseId]);
+  const { data: course, isLoading, error, refetch } = useAsyncData(() => getCourseById(courseId), [courseId]);
   const { data: faqItems, isLoading: faqLoading } = useAsyncData(getFaqItems, []);
+  const {
+    data: certificates,
+    isLoading: certificatesLoading,
+    error: certificatesError,
+    refetch: refetchCertificates,
+  } = useAsyncData(getCertificates, []);
+  const courseCertificates = certificates?.filter((certificate) => certificate.courseId === courseId) ?? [];
 
-  if (!isLoading && !course) {
+  if (!isLoading && !error && !course) {
     return <PlaceholderPage title="Kurs tapılmadı" description="Axtardığınız kurs mövcud deyil." />;
   }
 
@@ -38,7 +40,9 @@ export function CourseDetailPage() {
     <>
       <section ref={revealRef1} className="reveal pt-14 sm:pt-20">
         <Container className="text-center">
-          {isLoading || !course ? (
+          {error ? (
+            <FeedbackState title="Kurs məlumatı yüklənmədi" description={error.message} onAction={refetch} />
+          ) : isLoading || !course ? (
             <div className="mx-auto h-24 w-full max-w-xl animate-pulse rounded-xl2 bg-surface-soft" />
           ) : (
             <>
@@ -129,22 +133,41 @@ export function CourseDetailPage() {
             Bu kursu keçən tələbələrimiz
           </h2>
           <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {mockResults.map((result, i) => (
-              <div key={result.id} className="relative aspect-square overflow-hidden rounded-xl2 bg-surface-soft">
-                <img
-                  src={`https://i.pravatar.cc/300?img=${20 + i}`}
-                  alt={result.name}
-                  className="h-full w-full object-cover"
-                  loading="lazy"
-                />
-                <span className="absolute left-3 top-3 rounded-full bg-brand-blue px-3 py-1 text-xs font-bold text-white">
-                  {result.score}
-                </span>
-                <span className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3 text-xs font-semibold text-white">
-                  {result.name}
-                </span>
-              </div>
-            ))}
+            {certificatesError ? (
+              <FeedbackState
+                title="Nəticələri yükləmək mümkün olmadı"
+                description={certificatesError.message}
+                onAction={refetchCertificates}
+              />
+            ) : certificatesLoading ? (
+              Array.from({ length: 4 }).map((_, index) => (
+                <div key={index} className="h-44 animate-pulse rounded-xl2 bg-surface-soft" />
+              ))
+            ) : courseCertificates.length === 0 ? (
+              <FeedbackState title="Bu kurs üzrə nəticə hələ yoxdur" description="Sertifikatlar verildikdə burada görünəcək." />
+            ) : (
+              courseCertificates.slice(0, 4).map((certificate) => (
+                <article key={certificate.id} className="card-surface flex min-h-44 flex-col justify-between p-5">
+                  <div>
+                    <span className="inline-flex rounded-full bg-brand-blue-light px-3 py-1 text-xs font-bold text-brand-blue">
+                      {certificate.score}%
+                    </span>
+                    <h3 className="mt-4 text-base font-bold text-ink-900">{certificate.testTitle}</h3>
+                    <p className="mt-1 text-xs text-ink-500">{certificate.certificateType}</p>
+                  </div>
+                  {certificate.certificateUrl && (
+                    <a
+                      href={certificate.certificateUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="mt-5 text-sm font-semibold text-brand-blue hover:underline"
+                    >
+                      Sertifikata bax
+                    </a>
+                  )}
+                </article>
+              ))
+            )}
           </div>
         </Container>
       </section>

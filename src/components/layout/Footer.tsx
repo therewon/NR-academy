@@ -62,9 +62,14 @@ export function Footer() {
         <div>
           <h3 className="text-sm font-semibold text-ink-900">{t('footer.contact')}</h3>
           <ul className="mt-4 flex flex-col gap-3 text-sm text-ink-500">
-            <li className="flex items-center gap-2">
+            <li>
+              <a
+                href="tel:+994706162350"
+                className="flex items-center gap-2 transition-colors hover:text-brand-blue"
+              >
               <Icon name="phone" size={16} className="flex-none text-brand-blue" />
-              +994 (10) 000 00 00
+                +994 (70) 616 23 50
+              </a>
             </li>
             <li className="flex items-start gap-2">
               <Icon name="map-pin" size={16} className="mt-0.5 flex-none text-brand-blue" />

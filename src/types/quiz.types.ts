@@ -15,3 +15,13 @@ export interface QuizQuestion {
   options: QuizAnswerOption[];
   correctOptionId: string;
 }
+
+export interface StoredResult {
+  refNumber: string;
+  subjectLabel: string;
+  correct: number;
+  wrong: number;
+  total: number;
+  elapsed: string;
+  date: string;
+}

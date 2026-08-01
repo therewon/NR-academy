@@ -42,7 +42,7 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+        sans: ['"Poppins"', 'sans-serif'],
       },
       boxShadow: {
         card: '0 10px 30px -12px rgba(17, 20, 49, 0.12)',

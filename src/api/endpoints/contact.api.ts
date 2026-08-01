@@ -1,6 +1,8 @@
 import type { ContactFormPayload } from '../../types/contact.types';
 
 export async function submitContactForm(payload: ContactFormPayload): Promise<{ success: boolean }> {
-  console.info('[mock — no public backend endpoint yet] contact form submitted:', payload);
-  return Promise.resolve({ success: true });
+  void payload;
+  throw new Error('Müraciət endpoint-i backend-də hələ mövcud deyil.');
 }
+
+export const isContactSubmissionAvailable = false;

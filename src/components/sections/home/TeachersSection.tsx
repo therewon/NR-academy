@@ -6,11 +6,12 @@ import { CarouselArrows } from '../../common/CarouselArrows';
 import { useAsyncData } from '../../../hooks/useAsyncData';
 import { useCarousel } from '../../../hooks/useCarousel';
 import { getTeachers } from '../../../api/endpoints/teachers.api';
+import { FeedbackState } from '../../common/FeedbackState';
 
 export function TeachersSection() {
   const { t } = useTranslation();
   const sectionRef = useScrollReveal<HTMLElement>();
-  const { data: teachers, isLoading } = useAsyncData(getTeachers, []);
+  const { data: teachers, isLoading, error, refetch } = useAsyncData(getTeachers, []);
   const { trackRef, scrollByPage } = useCarousel<HTMLDivElement>();
 
   return (
@@ -31,14 +32,19 @@ export function TeachersSection() {
           className="mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth pb-2"
           style={{ scrollbarWidth: 'none' }}
         >
-          {isLoading || !teachers
-            ? Array.from({ length: 4 }).map((_, i) => (
+          {error ? (
+            <FeedbackState title="Müəllimləri yükləmək mümkün olmadı" description={error.message} onAction={refetch} />
+          ) : isLoading || !teachers ? (
+            Array.from({ length: 4 }).map((_, i) => (
                 <div
                   key={i}
                   className="h-72 w-[78%] flex-none animate-pulse rounded-xl2 bg-surface-soft sm:w-[calc((100%-20px)/2)] lg:w-[calc((100%-60px)/4)]"
                 />
               ))
-            : teachers.map((teacher) => (
+          ) : teachers.length === 0 ? (
+            <FeedbackState title="Müəllim məlumatı yoxdur" description="Müəllim profilləri əlavə edildikdə burada görünəcək." />
+          ) : (
+            teachers.map((teacher) => (
                 <article
                   key={teacher.id}
                   className="w-[78%] flex-none snap-start sm:w-[calc((100%-20px)/2)] lg:w-[calc((100%-60px)/4)]"
@@ -54,7 +60,8 @@ export function TeachersSection() {
                   <h3 className="mt-4 text-base font-bold text-ink-900">{teacher.name}</h3>
                   <p className="mt-1 text-sm leading-relaxed text-ink-500">{teacher.bio}</p>
                 </article>
-              ))}
+              ))
+          )}
         </div>
       </Container>
     </section>

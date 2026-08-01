@@ -9,6 +9,7 @@ import { getCourses } from '../../api/endpoints/courses.api';
 import { ROUTES } from '../../constants/routes';
 import { cn } from '../../utils/cn';
 import logo from '../../assets/logo-sm.png';
+import { useAuth } from '../../hooks/useAuth';
 
 const LANGS = ['AZ', 'RU', 'EN'] as const;
 type Lang = (typeof LANGS)[number];
@@ -23,6 +24,7 @@ const navLinks = [
 export function Header() {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
+  const { isAuthenticated, logout } = useAuth();
   const { data: courses } = useAsyncData(getCourses, []);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobileCoursesOpen, setIsMobileCoursesOpen] = useState(false);
@@ -68,14 +70,11 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-surface-line/70 bg-white/90 backdrop-blur">
       <Container className="flex h-20 items-center justify-between">
-        {}
         <Link to={ROUTES.home} className="flex-none">
           <img src={logo} alt="NR Academy" className="h-10 w-auto" />
         </Link>
 
-        {}
         <nav className="hidden flex-1 items-center justify-center gap-1 lg:flex">
-          {}
           <div
             ref={coursesDropRef}
             className="relative"
@@ -143,9 +142,7 @@ export function Header() {
           ))}
         </nav>
 
-        {}
         <div className="flex flex-none items-center gap-3">
-          {}
           <div ref={langDropRef} className="relative">
             <button
               type="button"
@@ -174,11 +171,16 @@ export function Header() {
             )}
           </div>
 
-          <Button to={ROUTES.register} className="hidden sm:inline-flex">
-            {t('nav.login')}
-          </Button>
+          {isAuthenticated ? (
+            <Button type="button" variant="outline" onClick={() => void logout()} className="hidden sm:inline-flex">
+              {t('nav.logout', { defaultValue: 'Çıxış' })}
+            </Button>
+          ) : (
+            <Button to={ROUTES.register} className="hidden sm:inline-flex">
+              {t('nav.login')}
+            </Button>
+          )}
 
-          {}
           <button
             type="button"
             className="flex h-10 w-10 items-center justify-center rounded-full border border-surface-line lg:hidden"
@@ -194,11 +196,9 @@ export function Header() {
         </div>
       </Container>
 
-      {}
       {isMenuOpen && (
         <div className="border-t border-surface-line bg-white lg:hidden">
           <Container className="flex flex-col gap-1 py-4">
-            {}
             <button
               type="button"
               onClick={() => setIsMobileCoursesOpen((v) => !v)}
@@ -261,9 +261,20 @@ export function Header() {
                 </button>
               ))}
             </div>
-            <Button to={ROUTES.register} onClick={() => setIsMenuOpen(false)} className="mt-2 justify-center">
-              {t('nav.login')}
-            </Button>
+            {isAuthenticated ? (
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => { setIsMenuOpen(false); void logout(); }}
+                className="mt-2 justify-center"
+              >
+                {t('nav.logout', { defaultValue: 'Çıxış' })}
+              </Button>
+            ) : (
+              <Button to={ROUTES.register} onClick={() => setIsMenuOpen(false)} className="mt-2 justify-center">
+                {t('nav.login')}
+              </Button>
+            )}
           </Container>
         </div>
       )}

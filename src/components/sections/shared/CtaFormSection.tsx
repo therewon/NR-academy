@@ -7,7 +7,7 @@ import { cn } from '../../../utils/cn';
 import { useAsyncData } from '../../../hooks/useAsyncData';
 import { useScrollReveal } from '../../../hooks/useScrollReveal';
 import { getCourses } from '../../../api/endpoints/courses.api';
-import { submitContactForm } from '../../../api/endpoints/contact.api';
+import { isContactSubmissionAvailable, submitContactForm } from '../../../api/endpoints/contact.api';
 import type { ContactFormPayload } from '../../../types/contact.types';
 
 const checklistKeys = ['cta.check1', 'cta.check2'];
@@ -140,9 +140,19 @@ export function CtaFormSection() {
               </Field>
             </div>
 
-            <button type="submit" disabled={status === 'submitting'} className="btn-primary mt-6 w-full">
+            <button
+              type="submit"
+              disabled={status === 'submitting' || !isContactSubmissionAvailable}
+              className="btn-primary mt-6 w-full"
+            >
               {status === 'submitting' ? t('cta.submitting') : t('cta.submit')}
             </button>
+
+            {!isContactSubmissionAvailable && (
+              <p className="mt-3 text-center text-xs leading-relaxed text-ink-500">
+                Onlayn müraciət xidməti hazırlanır. Hazırda bizimlə +994 (70) 616 23 50 nömrəsi ilə əlaqə saxlayın.
+              </p>
+            )}
 
             {status === 'success' && (
               <p className="mt-3 text-center text-sm font-medium text-tint-green-fg">

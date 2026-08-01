@@ -1,32 +1,7 @@
-import { createContext, useContext, useMemo, useState, type PropsWithChildren } from 'react';
+import { useMemo, useState, type PropsWithChildren } from 'react';
 import { getQuestionsForSubject, quizSubjects } from '../data/quiz.mock';
-import type { QuizQuestion } from '../types/quiz.types';
-
-export interface StoredResult {
-  refNumber: string;
-  subjectLabel: string;
-  correct: number;
-  wrong: number;
-  total: number;
-  elapsed: string;
-  date: string;
-}
-
-interface QuizState {
-  subjectId: string | null;
-  questions: QuizQuestion[];
-  answers: Record<string, string>;
-  startedAt: number | null;
-  refNumber: string | null;
-  selectSubject: (subjectId: string) => void;
-  answerQuestion: (questionId: string, optionId: string) => void;
-  finishQuiz: () => void;
-  reset: () => void;
-  score: { correct: number; wrong: number; total: number };
-  lookupResult: (refNumber: string) => StoredResult | null;
-}
-
-const QuizContext = createContext<QuizState | null>(null);
+import type { QuizQuestion, StoredResult } from '../types/quiz.types';
+import { QuizContext } from './quiz-context';
 
 function generateRefNumber(): string {
   return String(Math.floor(100000 + Math.random() * 900000));
@@ -99,10 +74,4 @@ export function QuizProvider({ children }: PropsWithChildren) {
       {children}
     </QuizContext.Provider>
   );
-}
-
-export function useQuiz() {
-  const ctx = useContext(QuizContext);
-  if (!ctx) throw new Error('useQuiz must be used within a QuizProvider');
-  return ctx;
 }

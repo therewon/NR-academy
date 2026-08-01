@@ -1,4 +1,5 @@
 import { useScrollReveal } from '../hooks/useScrollReveal';
+import type { CSSProperties } from 'react';
 import { Container } from '../components/common/Container';
 import { SectionBadge } from '../components/common/SectionBadge';
 import { Icon } from '../components/common/Icon';
@@ -9,6 +10,7 @@ import { getTeachers } from '../api/endpoints/teachers.api';
 import { getFaqItems } from '../api/endpoints/faq.api';
 import { milestones, studentReviews, timelineFooterText } from '../data/about.data';
 import openBox from '../assets/illustrations/open-box.png';
+import { FeedbackState } from '../components/common/FeedbackState';
 
 const statRows = [
   { icon: 'improve' as const, label: (count: number) => `${count}+ Təhsil istiqaməti` },
@@ -16,12 +18,23 @@ const statRows = [
   { icon: 'improve' as const, label: () => 'Onlayn və Offline Tədris' },
 ];
 
+const reviewLayouts: Array<CSSProperties & { rotate: string }> = [
+  { left: '0%', top: '0', rotate: '-3deg' },
+  { right: '0%', top: '15px', rotate: '2.5deg' },
+  { left: '10%', top: '110px', rotate: '2deg' },
+  { right: '2%', top: '125px', rotate: '-2deg' },
+  { left: '3%', top: '235px', rotate: '-1.5deg' },
+  { right: '5%', top: '265px', rotate: '3deg' },
+  { left: '8%', top: '370px', rotate: '2.5deg' },
+  { right: '5%', top: '385px', rotate: '-3deg' },
+];
+
 export function AboutPage() {
   const heroRef = useScrollReveal<HTMLElement>({ threshold: 0.1 });
   const teamRef = useScrollReveal<HTMLElement>();
   const timelineRef = useScrollReveal<HTMLElement>();
   const todayRef = useScrollReveal<HTMLElement>();
-  const { data: teachers, isLoading } = useAsyncData(getTeachers, []);
+  const { data: teachers, isLoading, error: teachersError, refetch: refetchTeachers } = useAsyncData(getTeachers, []);
   const { data: faqItems, isLoading: faqLoading } = useAsyncData(getFaqItems, []);
 
   return (
@@ -51,11 +64,16 @@ export function AboutPage() {
           </h2>
 
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {isLoading || !teachers
-              ? Array.from({ length: 3 }).map((_, i) => (
+            {teachersError ? (
+              <FeedbackState title="Komanda məlumatı yüklənmədi" description={teachersError.message} onAction={refetchTeachers} />
+            ) : isLoading || !teachers ? (
+              Array.from({ length: 3 }).map((_, i) => (
                   <div key={i} className="h-72 animate-pulse rounded-xl2 bg-surface-soft" />
                 ))
-              : teachers.slice(0, 3).map((teacher) => (
+            ) : teachers.length === 0 ? (
+              <FeedbackState title="Komanda məlumatı yoxdur" />
+            ) : (
+              teachers.slice(0, 3).map((teacher) => (
                   <article key={teacher.id} className="card-surface overflow-hidden">
                     <div className="aspect-[4/5] w-full bg-surface-soft">
                       <img
@@ -75,7 +93,8 @@ export function AboutPage() {
                       </span>
                     </div>
                   </article>
-                ))}
+                ))
+            )}
           </div>
         </Container>
       </section>
@@ -83,13 +102,10 @@ export function AboutPage() {
       <section ref={timelineRef} className="reveal border-y border-surface-line bg-surface-soft py-20 sm:py-28">
         <Container>
           <div className="timeline">
-            {}
             <span className="section-badge">Tarixçəmiz</span>
 
-            {}
             <div className="timeline__line timeline__line--down h-32 sm:h-44" />
 
-            {}
             <div className="timeline__dot" />
             <div className="mx-auto mt-6 max-w-2xl text-center">
               <span className="section-badge">{milestones[0].year}</span>
@@ -101,12 +117,10 @@ export function AboutPage() {
               )}
             </div>
 
-            {}
             <div className="timeline__line timeline__line--up h-16 sm:h-24 mt-10" />
             <div className="h-8 sm:h-12" />
             <div className="timeline__line timeline__line--down h-16 sm:h-24" />
 
-            {}
             <div className="timeline__dot" />
             <div className="mx-auto mt-6 max-w-2xl text-center">
               <span className="section-badge">{milestones[1].year}</span>
@@ -115,23 +129,12 @@ export function AboutPage() {
               </h2>
             </div>
 
-            {}
             <div className="reviews-funnel mt-10">
               <div className="reviews-scatter">
                 {studentReviews.map((review, i) => {
-                  const layouts = [
-                    { left: '0%', top: '0', rotate: '-3deg' },
-                    { right: '0%', top: '15px', rotate: '2.5deg' },
-                    { left: '10%', top: '110px', rotate: '2deg' },
-                    { right: '2%', top: '125px', rotate: '-2deg' },
-                    { left: '3%', top: '235px', rotate: '-1.5deg' },
-                    { right: '5%', top: '265px', rotate: '3deg' },
-                    { left: '8%', top: '370px', rotate: '2.5deg' },
-                    { right: '5%', top: '385px', rotate: '-3deg' },
-                  ];
-                  const { rotate, ...pos } = layouts[i] || { rotate: '0deg' };
+                  const { rotate, ...position } = reviewLayouts[i] || { rotate: '0deg' };
                   return (
-                    <div key={review.id} className="review-item" style={{ ...pos, transform: `rotate(${rotate})` } as any}>
+                    <div key={review.id} className="review-item" style={{ ...position, transform: `rotate(${rotate})` }}>
                       <div className="review-avatar">
                         <img src={review.avatar} alt={review.name} loading="lazy" />
                         <span>{review.name}</span>
@@ -146,7 +149,6 @@ export function AboutPage() {
               </div>
             </div>
 
-            {}
             <p className="mx-auto mt-10 max-w-2xl text-center text-sm leading-relaxed text-ink-500 sm:mt-14">
               {timelineFooterText}
             </p>

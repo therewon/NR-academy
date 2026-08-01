@@ -6,7 +6,7 @@ import { Button } from '../components/common/Button';
 import { Icon } from '../components/common/Icon';
 import { RegisterModal } from '../components/common/RegisterModal';
 import { useScrollReveal } from '../hooks/useScrollReveal';
-import { useQuiz } from '../context/QuizContext';
+import { useQuiz } from '../hooks/useQuiz';
 import { ROUTES } from '../constants/routes';
 
 export function QuizResultPage() {
@@ -64,7 +64,6 @@ export function QuizResultPage() {
               Aşağıda nəticələrinizlə tanış ola bilərsiniz.
             </p>
 
-            {}
             {refNumber && (
               <div className="mt-6 flex items-center gap-3 rounded-2xl bg-brand-blue-light px-5 py-3">
                 <Icon name="exam" size={18} className="flex-none text-brand-blue" />

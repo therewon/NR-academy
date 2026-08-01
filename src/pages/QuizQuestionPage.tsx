@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Container } from '../components/common/Container';
 import { Button } from '../components/common/Button';
 import { cn } from '../utils/cn';
-import { useQuiz } from '../context/QuizContext';
+import { useQuiz } from '../hooks/useQuiz';
 import { quizSubjects } from '../data/quiz.mock';
 import { ROUTES } from '../constants/routes';
 
@@ -56,13 +56,11 @@ export function QuizQuestionPage() {
 
   return (
     <>
-      {}
       <div className="h-1 w-full bg-brand-blue" />
 
       <section ref={revealRef1} className="reveal py-10 sm:py-14">
         <Container className="max-w-3xl">
           <div className="card-surface p-6 sm:p-8">
-            {}
             <div className="flex items-start justify-between gap-4">
               <div>
                 <p className="text-xs text-ink-500">Seçilmiş fənn</p>
@@ -83,13 +81,11 @@ export function QuizQuestionPage() {
               </div>
             </div>
 
-            {}
             <div className="mt-8">
               <p className="text-xs font-semibold text-brand-blue">Sual {stepIndex + 1}</p>
               <h1 className="mt-1 text-lg font-bold text-ink-900 sm:text-xl">{question.text}</h1>
             </div>
 
-            {}
             <div className="mt-6 flex flex-col gap-3">
               {question.options.map((option, i) => {
                 const isSelected = selectedOptionId === option.id;
@@ -121,7 +117,6 @@ export function QuizQuestionPage() {
               })}
             </div>
 
-            {}
             <div className="mt-8 flex justify-end">
               <Button onClick={handleNext} disabled={!selectedOptionId} showArrow>
                 {isLast ? 'Nəticəni gör' : 'Davam et'}
