@@ -29,25 +29,32 @@ export function Hero() {
         </div>
 
         <div className="max-lg:hidden relative mx-auto h-[340px] w-full max-w-md sm:h-[400px]">
-          <div className="absolute -right-[150px] z-10 bottom-8 w-40 sm:w-60 -rotate-6 rounded-2xl border border-surface-line bg-white p-2 shadow-floating">
-            <span className="absolute -top-9 left-1/2 -translate-x-1 h-15 w-15" >
-              <img src={BluePin} alt="" />
-            </span>
-            <p className="mb-3 text-sm font-medium text-center text-ink-900">Əli Məmmədov</p>
-            <div className="h-36 w-full overflow-hidden rounded bg-surface-soft sm:h-40">
-              <img
-                src={Ali}
-                alt="Ayla Quliyeva"
-                className="h-full w-full object-cover"
-                loading="lazy"
-              />
-            </div>
-
-            <div className='text-center mt-2'>
-              <p className="text-xs text-ink-500">IELTS Band score</p>
-              <span className="text-[28px] font-bold">
-                8.0
+          <div className="absolute -right-[150px] bottom-8 z-10 w-40 -rotate-6 sm:w-60">
+            <div className="hanging-card rounded-2xl border border-surface-line bg-white p-2 shadow-floating">
+              <span className="absolute -top-9 left-1/2 h-15 w-15 -translate-x-1/2">
+                <img src={BluePin} alt="" />
               </span>
+
+              <p className="mb-3 text-center text-sm font-medium text-ink-900">
+                Əli Məmmədov
+              </p>
+
+              <div className="h-36 w-full overflow-hidden rounded bg-surface-soft sm:h-40">
+                <img
+                  src={Ali}
+                  alt="Əli Məmmədov"
+                  className="h-full w-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+
+              <div className="mt-2 text-center">
+                <p className="text-xs text-ink-500">IELTS Band score</p>
+
+                <span className="text-[28px] font-bold">
+                  8.0
+                </span>
+              </div>
             </div>
           </div>
 
@@ -65,25 +72,34 @@ export function Hero() {
             </svg>
           </div>
 
-          <div className="absolute left-[80px] top-0 z-10 w-52 sm:w-60 rotate-3 rounded-2xl border border-surface-line bg-white p-3 shadow-floating">
-            <span className="absolute -top-9 left-1/2 -translate-x-1 h-15 w-15" >
-              <img src={PurplePin} alt="" />
-            </span>
-            <p className="mb-3 text-sm font-medium text-center text-ink-900">Leyla Qasımova</p>
-            <div className="h-36 w-full overflow-hidden rounded bg-surface-soft sm:h-40">
-              <img
-                src={Leyla}
-                alt="Ayla Quliyeva"
-                className="h-full w-full object-cover"
-                loading="lazy"
-              />
-            </div>
-
-            <div className='text-center mt-2'>
-              <p className="text-xs text-ink-500">{t('hero.score')}</p>
-              <span className="text-[28px] font-bold">
-                680 bal
+          <div className="absolute left-[80px] top-0 z-10 w-52 rotate-3 sm:w-60">
+            <div className="hanging-card rounded-2xl border border-surface-line bg-white p-3 shadow-floating">
+              <span className="absolute -top-9 left-1/2 h-15 w-15 -translate-x-1/2">
+                <img src={PurplePin} alt="" />
               </span>
+
+              <p className="mb-3 text-center text-sm font-medium text-ink-900">
+                Leyla Qasımova
+              </p>
+
+              <div className="h-36 w-full overflow-hidden rounded bg-surface-soft sm:h-40">
+                <img
+                  src={Leyla}
+                  alt="Leyla Qasımova"
+                  className="h-full w-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+
+              <div className="mt-2 text-center">
+                <p className="text-xs text-ink-500">
+                  {t("hero.score")}
+                </p>
+
+                <span className="text-[28px] font-bold">
+                  680 bal
+                </span>
+              </div>
             </div>
           </div>
         </div>
