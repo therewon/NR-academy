@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Container } from '../common/Container';
@@ -10,6 +10,7 @@ import { ROUTES } from '../../constants/routes';
 import { cn } from '../../utils/cn';
 import logo from '../../assets/logo-sm.png';
 import { useAuth } from '../../hooks/useAuth';
+import GapIcon from "../../assets/icons/header-gap-icon.png"
 
 const LANGS = ['AZ', 'RU', 'EN'] as const;
 type Lang = (typeof LANGS)[number];
@@ -74,7 +75,7 @@ export function Header() {
           <img src={logo} alt="NR Academy" className="h-10 w-auto" />
         </Link>
 
-        <nav className="hidden flex-1 items-center justify-center gap-1 lg:flex">
+        <nav className="hidden flex-1 items-center justify-center lg:flex">
           <div
             ref={coursesDropRef}
             className="relative"
@@ -90,7 +91,7 @@ export function Header() {
               type="button"
               onClick={() => navigate(ROUTES.courses)}
               className={cn(
-                'flex items-center gap-1 rounded-full px-4 py-2 text-sm font-medium text-ink-700 transition-colors hover:bg-surface-soft hover:text-ink-900',
+                'flex items-center gap-1 rounded-xl px-4 py-2 text-sm font-medium text-ink-700 transition-colors bg-[#F3F4F6] hover:bg-surface-soft hover:text-ink-900',
                 isCoursesOpen && 'bg-surface-soft text-ink-900'
               )}
             >
@@ -125,21 +126,34 @@ export function Header() {
               </div>
             )}
           </div>
+          <div>
+            <img src={GapIcon} alt=""  className='h-4 w-1 '/>
+          </div>
 
-          {navLinks.map((link) => (
-            <NavLink
-              key={link.id}
-              to={link.path}
-              className={({ isActive }) =>
-                cn(
-                  'rounded-full px-4 py-2 text-sm font-medium text-ink-700 transition-colors hover:bg-surface-soft hover:text-ink-900',
-                  isActive && 'bg-surface-soft text-ink-900'
-                )
-              }
-            >
-              {t(link.key)}
-            </NavLink>
-          ))}
+          {navLinks.map((link, index) => (
+  <Fragment key={link.id}>
+    <NavLink
+      to={link.path}
+      className={({ isActive }) =>
+        cn(
+          'rounded-xl bg-[#F3F4F6] px-4 py-2 text-sm font-medium text-ink-700 transition-colors hover:bg-surface-soft hover:text-ink-900',
+          isActive && 'bg-surface-soft text-ink-900'
+        )
+      }
+    >
+      {t(link.key)}
+    </NavLink>
+
+    {index !== navLinks.length - 1 && (
+      <img
+        src={GapIcon}
+        alt=""
+        aria-hidden="true"
+        className="w-1 h-4"
+      />
+    )}
+  </Fragment>
+))}
         </nav>
 
         <div className="flex flex-none items-center gap-3">

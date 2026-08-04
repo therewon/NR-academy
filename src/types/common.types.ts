@@ -21,7 +21,7 @@ export interface StatItem {
   id: string;
   value: string;
   label: string;
-  icon?: 'users' | 'star';
+  icon?: string;
 }
 
 export type TintColor = 'green' | 'purple' | 'yellow' | 'peach' | 'blue' | 'pink';
