@@ -12,7 +12,7 @@ export const apiClient = axios.create({
   },
 });
 
-export const isMockMode = import.meta.env.DEV && import.meta.env.VITE_USE_MOCK_DATA === 'true';
+export const isMockMode = import.meta.env.VITE_USE_MOCK_DATA === 'true';
 
 apiClient.interceptors.request.use((config) => {
   const token = getAccessToken();
