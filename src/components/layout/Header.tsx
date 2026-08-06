@@ -75,7 +75,7 @@ export function Header() {
           <img src={logo} alt="NR Academy" className="h-10 w-auto" />
         </Link>
 
-        <nav className="hidden flex-1 items-center justify-center lg:flex">
+        <nav className="hidden flex-1 items-center justify-center lg:flex ml-24">
           <div
             ref={coursesDropRef}
             className="relative"

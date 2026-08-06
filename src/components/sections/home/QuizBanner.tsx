@@ -8,6 +8,9 @@ import { useScrollReveal } from '../../../hooks/useScrollReveal';
 import { ROUTES } from '../../../constants/routes';
 import quizMascot from '../../../assets/illustrations/quiz-mascot.png';
 
+import { PiUsers } from "react-icons/pi";
+
+
 const quickFacts = [
   { icon: 'help-circle', label: '15 sual' },
   { icon: 'clock', label: '10 dəqiqə' },
@@ -20,31 +23,18 @@ export function QuizBanner() {
   const ref = useScrollReveal<HTMLElement>();
 
   return (
-    <section ref={ref} className="reveal py-6">
+    <section ref={ref} className="reveal bg-[#F9FAFB]">
       <Container>
-        <div className="relative overflow-hidden rounded-xl3 bg-tint-blue">
-          <div className="quiz-banner-waves" aria-hidden="true">
-            <svg viewBox="0 0 800 420" preserveAspectRatio="xMidYMid slice">
-              <path
-                d="M0,300 C160,220 260,360 420,300 C560,250 620,180 800,220 L800,420 L0,420 Z"
-                fill="#D7E3FD"
-                opacity="0.8"
-              />
-              <path
-                d="M0,180 C180,100 300,220 480,150 C620,95 700,130 800,70 L800,0 L0,0 Z"
-                fill="#DCE6FE"
-                opacity="0.7"
-              />
-            </svg>
-          </div>
+        <div className="relative overflow-hidden rounded-xl3">
+          
 
-          <div className="relative z-10 grid gap-8 p-8 sm:p-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+          <div className="relative z-10 grid gap-8 px-8 sm:px-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
             <div>
-              <span className="section-badge bg-white">Demo test</span>
-              <h2 className="mt-5 max-w-md text-3xl font-extrabold leading-tight tracking-tight text-ink-900 sm:text-4xl">
+              <span className="section-badge bg-[#DBEAFE] text-[#2563EB]"><PiUsers size={18} className='mr-2'/> 1000+ tələbə iştirak edib</span>
+              <h2 className="mt-5 max-w-md text-3xl font-extrabold leading-tight tracking-tight text-ink-900 sm:text-[50px]">
                 {t('quiz.bannerTitle')}
               </h2>
-              <p className="mt-3 max-w-sm text-sm leading-relaxed text-ink-700/80">
+              <p className="mt-3 text-lg leading-relaxed text-ink-700/80">
                 {t('quiz.bannerSubtitle')}
               </p>
 
@@ -71,11 +61,12 @@ export function QuizBanner() {
               </div>
             </div>
 
-            <div className="relative mx-auto h-56 w-full max-w-xs sm:h-72">
+            <div className="relative mx-auto h-56 w-full sm:h-[500px]">
+              <img src="" alt="" />
               <img
                 src={quizMascot}
                 alt="Test maskotu saat qülləsinin arxasından baxır"
-                className="h-full w-full object-contain object-bottom"
+                className="h-full w-full object-contain object-top scale-150"
                 loading="lazy"
               />
             </div>
