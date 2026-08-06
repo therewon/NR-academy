@@ -7,6 +7,7 @@ import { ResultLookupModal } from '../../common/ResultLookupModal';
 import { useScrollReveal } from '../../../hooks/useScrollReveal';
 import { ROUTES } from '../../../constants/routes';
 import quizMascot from '../../../assets/illustrations/quiz-mascot.png';
+import vectorLine from "../../../assets/quiz-section-vector-line.svg"
 
 import { PiUsers } from "react-icons/pi";
 
@@ -62,11 +63,11 @@ export function QuizBanner() {
             </div>
 
             <div className="relative mx-auto h-56 w-full sm:h-[500px]">
-              <img src="" alt="" />
+              <img src={vectorLine} alt="" className='absolute h-full'/>
               <img
                 src={quizMascot}
                 alt="Test maskotu saat qülləsinin arxasından baxır"
-                className="h-full w-full object-contain object-top scale-150"
+                className="h-full w-full object-contain object-top scale-125"
                 loading="lazy"
               />
             </div>
