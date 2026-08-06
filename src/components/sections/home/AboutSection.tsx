@@ -2,7 +2,6 @@ import { useTranslation } from 'react-i18next';
 import { Container } from '../../common/Container';
 import { SectionBadge } from '../../common/SectionBadge';
 import { Button } from '../../common/Button';
-import { Icon } from '../../common/Icon';
 import { useScrollReveal } from '../../../hooks/useScrollReveal';
 import { homeStats } from '../../../data/stats.data';
 import { ROUTES } from '../../../constants/routes';
